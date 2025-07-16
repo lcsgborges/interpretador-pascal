@@ -188,14 +188,6 @@ python3 compiler.py --debug programa.pas
    - Define estruturas de dados para a AST
    - Representa construções da linguagem
 
-### Adicionando Novas Funcionalidades
-
-1. Adicionar tokens necessários no `lexer.py`
-2. Implementar parsing no `parser.py`
-3. Criar nós AST no `ast_nodes.py`
-4. Implementar execução no `interpreter.py`
-5. Adicionar testes
-
 ## Limitações
 
 - Apenas arrays unidimensionais
