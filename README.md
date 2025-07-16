@@ -36,7 +36,7 @@ trabalho-compiladores/
 
 ```bash
 # Clonar o repositório
-git clone <url-do-repositorio>
+git clone <git@github.com:lcsgborges/trabalho-compiladores.git>
 cd trabalho-compiladores
 ```
 
@@ -188,14 +188,6 @@ python3 compiler.py --debug programa.pas
    - Define estruturas de dados para a AST
    - Representa construções da linguagem
 
-### Adicionando Novas Funcionalidades
-
-1. Adicionar tokens necessários no `lexer.py`
-2. Implementar parsing no `parser.py`
-3. Criar nós AST no `ast_nodes.py`
-4. Implementar execução no `interpreter.py`
-5. Adicionar testes
-
 ## Limitações
 
 - Apenas arrays unidimensionais
@@ -206,4 +198,4 @@ python3 compiler.py --debug programa.pas
 ## Autores
 
 - Lucas Guimarães Borges (222015159)
-- 
+- Maria Clara Alves de Sousa (221008329)
