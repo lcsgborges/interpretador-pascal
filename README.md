@@ -25,7 +25,6 @@ trabalho-compiladores/
 │   ├── architecture.md
 │   └── syntax.md
 ├── compiler.py             # Interface principal
-├── setup.py               # Configuração de instalação
 ├── Makefile               # Comandos úteis
 └── README.md              # Este arquivo
 ```
