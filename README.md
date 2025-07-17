@@ -35,7 +35,7 @@ trabalho-compiladores/
 
 ```bash
 # Clonar o repositório
-git clone <git@github.com:lcsgborges/trabalho-compiladores.git>
+git clone git@github.com:lcsgborges/trabalho-compiladores.git
 cd trabalho-compiladores
 ```
 
