@@ -1,202 +1,287 @@
-# Compilador Pascal em Python
+# Interpretador Pascal
 
-Este é um compilador/interpretador de Pascal implementado em Python para a disciplina de Compiladores I.
-
-## Estrutura do Projeto
-
-```
-trabalho-compiladores/
-├── src/                    # Código fonte
-│   └── compiler/           # Módulos do compilador
-│       ├── __init__.py
-│       ├── lexer.py        # Analisador léxico
-│       ├── parser.py       # Analisador sintático
-│       ├── interpreter.py  # Interpretador
-│       └── ast_nodes.py    # Nós da AST
-├── tests/                  # Testes unitários
-│   ├── __init__.py
-│   ├── test_lexer.py
-│   ├── test_parser.py
-│   ├── test_interpreter.py
-│   └── run_tests.py
-├── pascal_programs/        # Programas Pascal de exemplo
-├── debug/                  # Arquivos para debug
-├── docs/                   # Documentação
-│   ├── architecture.md
-│   └── syntax.md
-├── compiler.py             # Interface principal
-├── Makefile               # Comandos úteis
-└── README.md              # Este arquivo
-```
-
-## Como usar
-
-### Instalação
-
-```bash
-# Clonar o repositório
-git clone git@github.com:lcsgborges/trabalho-compiladores.git
-cd trabalho-compiladores
-```
-
-### Execução
-
-```bash
-# Compilar e executar um programa Pascal
-python3 compiler.py pascal_programs/hello.pas
-
-# Modo interativo
-python3 compiler.py -i
-
-# Modo debug (mostra tokens)
-python3 compiler.py --debug pascal_programs/hello.pas
-
-# Ajuda
-python3 compiler.py --help
-```
-
-### Usando Makefile
-
-```bash
-# Executar exemplo
-make run
-
-# Executar testes
-make test
-
-# Limpar arquivos temporários
-make clean
-```
-
-## Funcionalidades Suportadas
-
-### Tipos de Dados
-- `integer` - números inteiros
-- `real` - números reais
-- `boolean` - verdadeiro/falso
-- `string` - texto
-- `array` - arrays unidimensionais
-
-### Operações
-- **Aritméticas**: `+`, `-`, `*`, `/`, `div`, `mod`
-- **Relacionais**: `=`, `<>`, `<`, `>`, `<=`, `>=`
-- **Lógicas**: `and`, `or`, `not`
-
-### Estruturas de Controle
-- `if-then-else` - condicionais
-- `while-do` - loops condicionais
-- `for-to-do` - loops com contador
-
-### Subprogramas
-- `procedure` - procedimentos
-- `function` - funções com valor de retorno
-
-### Entrada/Saída
-- `readln()` - leitura de dados
-- `writeln()` - escrita de dados
-
-## Exemplos
-
-### Hello World
-```pascal
-program HelloWorld;
-begin
-    writeln('Olá, mundo!');
-end.
-```
-
-### Calculadora
-```pascal
-program Calculadora;
-var
-    a, b: integer;
-begin
-    writeln('Digite dois números:');
-    readln(a, b);
-    writeln('Soma: ', a + b);
-end.
-```
-
-### Função Recursiva
-```pascal
-program Fatorial;
-var
-    n: integer;
-
-function fatorial(x: integer): integer;
-begin
-    if x <= 1 then
-        return 1
-    else
-        return x * fatorial(x - 1);
-end;
-
-begin
-    writeln('Digite um número:');
-    readln(n);
-    writeln('Fatorial: ', fatorial(n));
-end.
-```
-
-## Testes
-
-```bash
-# Executar todos os testes
-python3 tests/run_tests.py
-
-# Ou usando make
-make test
-
-# Executar teste específico
-python3 -m unittest tests.test_lexer
-```
-
-## Documentação
-
-- [Arquitetura](docs/architecture.md) - Visão geral da arquitetura
-- [Sintaxe](docs/syntax.md) - Sintaxe suportada
-
-## Debug
-
-Para debugar problemas, use:
-
-```bash
-# Modo debug - mostra tokens
-python3 compiler.py --debug programa.pas
-
-# Salvar arquivos de debug na pasta debug/
-```
-
-## Desenvolvimento
-
-### Estrutura do Compilador
-
-1. **Lexer** (`src/compiler/lexer.py`)
-   - Converte código fonte em tokens
-   - Reconhece palavras-chave, identificadores, literais, operadores
-
-2. **Parser** (`src/compiler/parser.py`)
-   - Converte tokens em AST (Árvore Sintática Abstrata)
-   - Implementa gramática Pascal
-
-3. **Interpreter** (`src/compiler/interpreter.py`)
-   - Executa o programa a partir da AST
-   - Gerencia escopos e variáveis
-
-4. **AST Nodes** (`src/compiler/ast_nodes.py`)
-   - Define estruturas de dados para a AST
-   - Representa construções da linguagem
-
-## Limitações
-
-- Apenas arrays unidimensionais
-- Sem verificação de tipos avançada
-- Sem otimizações
-- Sem geração de código objeto
-
-## Autores
-
+**Integrantes:**
 - Lucas Guimarães Borges (222015159)
 - Maria Clara Alves de Sousa (221008329)
 - Davi Mesquita Sousa (222006650)
 - Daniel Fernandes Silva (222008459)
+
+## Introdução
+
+Este projeto implementa um interpretador para um subconjunto da linguagem Pascal. O interpretador foi desenvolvido seguindo as etapas tradicionais de compilação: análise léxica, análise sintática e execução direta através de uma árvore sintática abstrata (AST).
+
+### Características Técnicas
+
+- **Linguagem**: Python 3.8+
+- **Dependências**: Apenas biblioteca padrão do Python
+- **Arquitetura**: Tree-walking interpreter
+- **Paradigma**: Orientado a objetos
+- **Framework de Testes**: Python unittest
+- **Cobertura de Testes**: 19 testes unitários com 100% de taxa de sucesso
+
+### Funcionalidades Implementadas
+
+O interpretador suporta as seguintes funcionalidades da linguagem Pascal:
+
+- **Tipos de dados básicos**: integer, real, boolean, string
+- **Operações aritméticas**: +, -, *, div, mod
+- **Operações lógicas**: and, or, not
+- **Operações de comparação**: =, <>, <, >, <=, >=
+- **Estruturas de controle**: if-then-else, while-do, for-to-do
+- **Arrays unidimensionais**: declaração e acesso por índices
+- **Procedimentos**: com parâmetros e escopo local
+- **Entrada/Saída**: readln e writeln com suporte a múltiplos parâmetros
+- **Comentários**: suporte a comentários de linha (//) e bloco ({ })
+
+### Conceitos Originais e Interessantes
+
+**1. Sistema de Debugging Integrado**
+- Modo ```--debug``` que exibe todos os tokens durante a análise léxica
+- Informações detalhadas de linha e coluna para cada token
+- Facilita a compreensão do processo de interpretação
+
+**2. Interpretação Tree-Walking Otimizada**
+- Execução direta da AST sem geração de código intermediário
+- Ambiente de execução com gerenciamento de escopo aninhado
+- Tratamento de exceções com mensagens informativas
+
+**3. Sistema de Tipos Dinâmico com Validação**
+- Verificação de tipos em tempo de execução
+- Coerção automática entre tipos compatíveis
+- Mensagens de erro precisas com localização
+
+**4. Interface de Linha de Comando Avançada**
+- Modo debug que exibe informações detalhadas de execução
+- Suporte a múltiplos formatos de entrada
+- Validação automática de extensões de arquivo
+
+## Instalação e Configuração
+
+### Pré-requisitos
+
+- Python 3.8 ou superior
+
+### Instalação
+
+```bash
+git clone https://github.com/fcte-compiladores/trabalho-final-trabalho_compiladores_pascal.git trabalho-compiladores
+cd trabalho-compiladores
+```
+
+### Configuração
+
+```bash
+# Verificar instalação do Python
+python3 --version
+
+# Pode usar o make para ter mais detalhes:
+make info
+```
+
+> Verificar, mas acho que no Windows é só python e não python3 (o interpretador foi criado em sistema Linux)
+
+## Como Usar
+
+### Execução de Arquivo Pascal
+
+```bash
+# Sintaxe básica
+python3 compiler.py arquivo.pas
+
+# Com modo debug (mostra tokens)
+python3 compiler.py --debug arquivo.pas
+
+# Exemplos práticos
+python3 compiler.py examples/hello.pas
+python3 compiler.py examples/fibonacci.pas
+python3 compiler.py examples/selection_sort.pas
+```
+
+### Usando o Makefile
+
+```bash
+# Executar todos os testes
+make test
+
+# Executar testes detalhados
+make test-verbose
+
+# Executar os 5 exemplos principais
+make examples
+
+# Executar arquivo específico
+make run FILE=examples/hello.pas
+
+# Limpar arquivos temporários
+make clean
+
+# Configuração inicial
+make setup
+```
+
+## Exemplos de Programas Pascal
+
+O projeto inclui 11 exemplos Pascal organizados por complexidade, localizados na pasta `examples/`:
+
+### Lista Completa de Exemplos
+
+**Básico:**
+- hello.pas - Programa "Olá mundo" introdutório
+
+**Intermediário:**
+- fibonacci.pas - Sequência matemática com loops
+- calculadora.pas - Operações aritméticas básicas
+- controle_fluxo.pas - Estruturas if, while, for
+- arrays.pas - Manipulação de vetores
+
+**Avançado:**
+- procedimentos.pas - Definição e uso de procedimentos
+- procedimentos_simples.pas - Procedimentos com parâmetros
+- exemplo_completo.pas - Sistema completo com arrays e estatísticas
+- jogo_adivinhacao.pas - Jogo interativo
+- selection_sort.pas - Algoritmo de ordenação por seleção
+- bubble_sort.pas - Algoritmo de ordenação bubble sort
+
+## Estrutura do Código
+
+O projeto está organizado da seguinte forma:
+
+```
+trabalho-compiladores/
+├── src/compiler/             # Código principal do interpretador
+│   ├── lexer.py              # Analisador léxico
+│   ├── parser.py             # Analisador sintático
+│   ├── ast_nodes.py          # Definição dos nós da AST
+│   ├── interpreter.py        # Interpretador tree-walking
+│   └── __init__.py           # Módulo Python
+├── examples/                 # 11 exemplos Pascal organizados por complexidade
+├── tests/                    # Testes unitários
+│   ├── test_lexer.py         # Testes do analisador léxico (6 testes)
+│   ├── test_parser.py        # Testes do analisador sintático (6 testes)
+│   ├── test_interpreter.py   # Testes do interpretador (7 testes)
+│   └── run_tests.py          # Script para executar todos os testes
+├── docs/                     # Documentação técnica
+│   ├── architecture.md       # Arquitetura do sistema
+│   └── syntax.md             # Sintaxe Pascal suportada
+├── debug/                    # Pasta para arquivos de debugging
+├── compiler.py               # Interface principal do interpretador
+├── README.md                 # Este arquivo
+├── Makefile                  # Automação de tarefas
+└── requirements.txt          # Dependências (Python padrão apenas)
+```
+
+### Arquitetura do Sistema
+
+**1. Analisador Léxico (lexer.py)**
+- Converte código Pascal em tokens
+- Identifica palavras-chave, operadores, literais e identificadores
+- Remove comentários e espaços em branco
+- Gera tokens com informação de posição para debug
+
+**2. Analisador Sintático (parser.py)**
+- Implementa parser recursive descent
+- Constrói AST (Árvore Sintática Abstrata)
+- Valida sintaxe seguindo gramática Pascal
+- Detecta e reporta erros de sintaxe
+
+**3. Nós da AST (ast_nodes.py)**
+- Define classes para cada construção Pascal
+- Hierarquia de classes representando elementos da linguagem
+- Implementa padrão Visitor para travessia da árvore
+
+**4. Interpretador (interpreter.py)**
+- Executa programa através da travessia da AST
+- Gerencia ambiente de execução e escopo de variáveis
+- Implementa operações e estruturas de controle
+- Trata erros de execução com mensagens informativas
+
+**5. Interface Principal (compiler.py)**
+- Interface de linha de comando
+- Coordena as fases de análise e execução
+- Implementa modo debug
+- Trata exceções e fornece feedback ao usuário
+
+## Documentação Técnica
+
+A pasta `docs/` contém documentação técnica detalhada:
+
+### docs/architecture.md
+- Arquitetura completa do interpretador
+
+### docs/syntax.md  
+- Sintaxe Pascal completa suportada
+
+## Testes Unitários
+
+### Cobertura de Testes
+- **Total**: 19 testes unitários
+- **Taxa de Sucesso**: 100% (19/19 passando)
+
+### Detalhamento por Módulo
+
+**Análise Léxica (6 testes)**
+- test_simple_tokens: Tokens básicos (program, begin, end, etc.)
+- test_keywords: Palavras-chave da linguagem Pascal
+- test_numbers: Números inteiros e reais
+- test_strings: Literais string com aspas
+- test_operators: Operadores aritméticos, relacionais e lógicos
+- test_comments: Comentários de linha e bloco
+
+**Análise Sintática (6 testes)**
+- test_simple_program: Estrutura básica de programa Pascal
+- test_variable_declaration: Declaração de variáveis com tipos
+- test_assignment: Comandos de atribuição
+- test_if_statement: Estruturas condicionais if-then-else
+- test_while_statement: Loops while-do
+- test_for_statement: Loops for-to-do
+
+**Interpretação e Execução (7 testes)**
+- test_simple_output: Comando writeln básico
+- test_arithmetic: Operações aritméticas (+, -, *, div)
+- test_boolean_operations: Operações lógicas (and, or, not)
+- test_if_statement: Execução de condicionais
+- test_while_loop: Execução de loops while
+- test_for_loop: Execução de loops for
+- test_arrays: Manipulação de arrays unidimensionais
+
+### Execução dos Testes
+
+```bash
+# Todos os testes (19 testes)
+python3 -m unittest tests.test_lexer tests.test_parser tests.test_interpreter -v
+
+# Testes específicos por módulo
+python3 -m unittest tests.test_lexer -v          # 6 testes de análise léxica
+python3 -m unittest tests.test_parser -v         # 6 testes de análise sintática  
+python3 -m unittest tests.test_interpreter -v    # 7 testes de interpretação
+
+# Usando o Makefile
+make test           # Execução normal
+make test-verbose   # Execução detalhada
+```
+
+## Limitações Conhecidas
+
+- Não suporte a funções que retornam valores (apenas procedimentos)
+- Arrays apenas unidimensionais (sem matrizes)
+- Sem gerenciamento dinâmico de memória
+- Sem suporte a recursão complexa
+- Strings não têm indexação direta
+- Sem suporte a case/switch 
+
+## Melhorias Futuras
+- Implementar funções com valor de retorno
+- Adicionar suporte a arrays multidimensionais
+- Adicionar suporte a mais tipos de dados
+
+## Referências
+
+1. **Wirth, Niklaus** - "Pascal User Manual and Report": Referência principal para a especificação da linguagem Pascal.
+
+2. **Aho, Alfred V. et al.** - "Compilers: Principles, Techniques, and Tools" (Dragon Book): Base teórica para implementação de compiladores e interpretadores.
+
+3. **Grune, Dick et al.** - "Modern Compiler Design": Padrões de implementação de AST e técnicas de interpretação.
+
+4. **Documentação Python 3.8+**: Implementação das estruturas de dados e algoritmos utilizados.
+
+---
