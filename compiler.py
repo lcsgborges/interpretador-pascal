@@ -1,50 +1,52 @@
 """
-Compilador Pascal - Interface Principal
+Interpretador Pascal - Interface Principal
 """
 
 import sys
 import os
-from typing import List
 from src.compiler.lexer import Lexer, TokenType
 from src.compiler.parser import Parser, ParseError
 from src.compiler.interpreter import Interpreter, RuntimeError
 
-class PascalCompiler:
+class PascalInterpreter:
+    """
+    Interpretador Pascal implementado em Python.
+    
+    Utiliza arquitetura tree-walking interpreter:
+    Código Pascal → Lexer → Parser → AST → Interpreter → Execução
+    """
+    
     def __init__(self):
         self.lexer = None
         self.parser = None
         self.interpreter = None
     
-    def compile_and_run(self, source_code: str, filename: str = "<string>"):
-        """Compila e executa código Pascal"""
+    def interpret(self, source_code: str, filename: str = "<string>"):
+        """Interpreta e executa código Pascal"""
         try:
-            print(f"Compilando {filename}...")
+            print(f"Interpretando {filename}...")
             
-            # Análise Léxica
             print("Fase 1: Análise Léxica...")
             self.lexer = Lexer(source_code)
             tokens = self.lexer.tokenize()
             
-            # Mostrar tokens em modo debug
             if '--debug' in sys.argv:
                 print("Tokens encontrados:")
                 for token in tokens:
                     if token.type != TokenType.EOF:
                         print(f"  {token.type.name}: {token.value} (linha {token.line})")
             
-            # Análise Sintática
             print("Fase 2: Análise Sintática...")
             self.parser = Parser(tokens)
             ast = self.parser.parse()
             
-            # Execução
-            print("Fase 3: Execução...")
-            print("-" * 40)
+            print("Fase 3: Interpretação e Execução...")
+            print("-" * 50)
             
             self.interpreter = Interpreter()
             self.interpreter.interpret(ast)
             
-            print("-" * 40)
+            print("-" * 50)
             print("Programa executado com sucesso!")
             
         except ParseError as e:
@@ -57,8 +59,8 @@ class PascalCompiler:
             print(f"Erro inesperado: {e}")
             sys.exit(1)
     
-    def compile_file(self, filename: str):
-        """Compila e executa arquivo Pascal"""
+    def interpret_file(self, filename: str):
+        """Interpreta e executa arquivo Pascal"""
         if not os.path.exists(filename):
             print(f"Erro: Arquivo '{filename}' não encontrado")
             sys.exit(1)
@@ -70,7 +72,7 @@ class PascalCompiler:
             with open(filename, 'r', encoding='utf-8') as file:
                 source_code = file.read()
             
-            self.compile_and_run(source_code, filename)
+            self.interpret(source_code, filename)
             
         except FileNotFoundError:
             print(f"Erro: Arquivo '{filename}' não encontrado")
@@ -81,56 +83,35 @@ class PascalCompiler:
         except UnicodeDecodeError:
             print(f"Erro: Problema de codificação no arquivo '{filename}'")
             sys.exit(1)
-    
-    def interactive_mode(self):
-        """Modo interativo para teste"""
-        print("Compilador Pascal - Modo Interativo")
-        print("Digite 'quit' para sair")
-        print("-" * 40)
-        
-        while True:
-            try:
-                code = input(">>> ")
-                if code.strip().lower() == 'quit':
-                    break
-                
-                if code.strip():
-                    self.compile_and_run(code, "<interactive>")
-                    
-            except KeyboardInterrupt:
-                print("\nSaindo...")
-                break
-            except EOFError:
-                print("\nSaindo...")
-                break
 
 def print_usage():
-    """Mostra como usar o compilador"""
-    print("Uso: python compiler.py [opções] [arquivo.pas]")
+    """Mostra informações de uso do interpretador"""
+    print("Interpretador Pascal")
+    print()
+    print("Uso: python3 compiler.py [opções] [arquivo.pas]")
     print()
     print("Opções:")
-    print("  -h, --help    Mostra esta ajuda")
-    print("  -i, --interactive  Modo interativo")
-    print("  --debug       Mostra tokens durante a compilação")
+    print("  -h, --help       Mostra esta ajuda")
+    print("  --debug          Mostra tokens durante interpretação")
     print()
     print("Exemplos:")
-    print("  python compiler.py exemplo.pas")
-    print("  python compiler.py -i")
-    print("  python compiler.py --debug programa.pas")
+    print("  python3 compiler.py examples/hello.pas")
+    print("  python3 compiler.py --debug examples/exemplo_completo.pas")
+    print()
+    print("Exemplos disponíveis em examples/:")
+    print("  hello.pas, fibonacci.pas, procedimentos_simples.pas,")
+    print("  exemplo_completo.pas, selection_sort.pas, bubble_sort.pas")
 
 def main():
+    """Função principal do interpretador Pascal"""
     if len(sys.argv) == 1:
         print_usage()
         return
     
-    compiler = PascalCompiler()
+    interpreter = PascalInterpreter()
     
     if '-h' in sys.argv or '--help' in sys.argv:
         print_usage()
-        return
-    
-    if '-i' in sys.argv or '--interactive' in sys.argv:
-        compiler.interactive_mode()
         return
     
     # Encontrar arquivo Pascal
@@ -145,7 +126,7 @@ def main():
         print_usage()
         sys.exit(1)
     
-    compiler.compile_file(pascal_file)
+    interpreter.interpret_file(pascal_file)
 
 if __name__ == "__main__":
     main()
