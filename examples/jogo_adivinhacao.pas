@@ -1,27 +1,23 @@
 program JogoAdvinhacao;
 {
   Jogo de adivinhação que demonstra uso de:
-  - Geração de números aleatórios (simulada)
+  - Geração de números pseudo-aleatórios
   - Estruturas de controle
   - Contadores e validações
+  - Procedimentos com parâmetros
 }
 
 var
     numeroSecreto, tentativa, numTentativas, maxTentativas: integer;
-    acertou, jogando: boolean;
+    acertou, jogando, valido: boolean;
+    resposta: string;
+    valor: integer;
 
-{ Função para simular geração de número aleatório }
-function gerarNumeroAleatorio(min, max: integer): integer;
-var
-    seed: integer;
+{ Procedimento para definir número secreto fixo para demonstração }
+procedure definirNumeroSecreto();
 begin
-    { Simulação simples de número aleatório baseado em entrada do usuário }
-    writeln('Para gerar número aleatório, digite um número qualquer:');
-    readln(seed);
-    
-    { Fórmula simples para gerar número pseudo-aleatório }
-    seed := (seed * 1103515245 + 12345) mod 2147483647;
-    gerarNumeroAleatorio := (seed mod (max - min + 1)) + min;
+    { Número secreto fixo para demonstração - em um jogo real seria aleatório }
+    numeroSecreto := 42;
 end;
 
 { Procedimento para exibir dicas }
@@ -45,7 +41,7 @@ begin
     
     if acertou then
     begin
-        writeln('🎉 Parabéns! Você acertou!');
+        writeln('Parabéns! Você acertou!');
         writeln('Número de tentativas: ', numTentativas);
         
         if numTentativas <= 3 then
@@ -57,34 +53,32 @@ begin
     end
     else
     begin
-        writeln('😞 Que pena! Você não conseguiu adivinhar.');
+        writeln('Que pena! Você não conseguiu adivinhar.');
         writeln('O número secreto era: ', numeroSecreto);
         writeln('Tente novamente na próxima vez!');
     end;
 end;
 
-{ Função para validar entrada do usuário }
-function lerTentativa(min, max: integer): integer;
-var
-    valor: integer;
-    valido: boolean;
+{ Procedimento para ler tentativa do usuário }
+procedure lerTentativa(min, max: integer);
 begin
     valido := false;
     
-    repeat
+    while not valido do
+    begin
         writeln('Digite um número entre ', min, ' e ', max, ':');
         readln(valor);
         
         if (valor >= min) and (valor <= max) then
         begin
             valido := true;
-            lerTentativa := valor;
+            tentativa := valor;
         end
         else
         begin
             writeln('Número inválido! Deve estar entre ', min, ' e ', max, '.');
         end;
-    until valido;
+    end;
 end;
 
 { Procedimento principal do jogo }
@@ -97,7 +91,7 @@ begin
     writeln('');
     
     { Gerar número secreto }
-    numeroSecreto := gerarNumeroAleatorio(1, 100);
+    definirNumeroSecreto();
     maxTentativas := 10;
     numTentativas := 0;
     acertou := false;
@@ -108,7 +102,7 @@ begin
         numTentativas := numTentativas + 1;
         writeln('Tentativa ', numTentativas, ' de ', maxTentativas);
         
-        tentativa := lerTentativa(1, 100);
+        lerTentativa(1, 100);
         
         if tentativa = numeroSecreto then
         begin
@@ -126,27 +120,27 @@ begin
     exibirResultado(acertou, numTentativas, numeroSecreto);
 end;
 
-{ Função para perguntar se quer jogar novamente }
-function jogarNovamente(): boolean;
-var
-    resposta: string;
+{ Procedimento para perguntar se quer jogar novamente }
+procedure jogarNovamente();
 begin
     writeln('');
     writeln('Deseja jogar novamente? (s/n):');
     readln(resposta);
     
-    jogarNovamente := (resposta = 's') or (resposta = 'S') or (resposta = 'sim') or (resposta = 'SIM');
+    jogando := (resposta = 's') or (resposta = 'S') or (resposta = 'sim') or (resposta = 'SIM');
 end;
 
 { Programa principal }
 begin
-    writeln('🎮 Bem-vindo ao Jogo de Adivinhação! 🎮');
+    writeln('Bem-vindo ao Jogo de Adivinhação!');
     
-    repeat
+    jogando := true;
+    while jogando do
+    begin
         jogar();
-        jogando := jogarNovamente();
-    until not jogando;
+        jogarNovamente();
+    end;
     
     writeln('');
-    writeln('Obrigado por jogar! Até a próxima! 👋');
+    writeln('Obrigado por jogar! Até a próxima!');
 end.
