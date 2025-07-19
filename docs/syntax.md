@@ -1,12 +1,23 @@
-# Sintaxe Suportada
+# Sintaxe Pascal Suportada
 
-## Estrutura Básica
+## Estrutura Básica de Programa
 
 ```pascal
 program NomePrograma;
-{ declarações }
+{ Seção de declarações de variáveis }
+var
+    variavel1: tipo1;
+    variavel2: tipo2;
+    
+{ Seção de procedimentos - opcional }
+procedure NomeProcedimento;
 begin
-    { comandos }
+    { comandos do procedimento }
+end;
+
+{ Programa principal }
+begin
+    { comandos principais }
 end.
 ```
 
@@ -15,117 +26,207 @@ end.
 ### Variáveis
 ```pascal
 var
-    x, y: integer;
-    z: real;
-    nome: string;
-    ativo: boolean;
+    contador, idade: integer;        { números inteiros }
+    altura, peso: real;             { números reais }
+    nome, sobrenome: string;        { strings/texto }
+    ativo, concluido: boolean;      { valores lógicos }
 ```
 
-### Arrays
+**Tipos Suportados:**
+- `integer` - números inteiros (ex: 42, -10, 0)
+- `real` - números decimais (ex: 3.14, -2.5, 0.0)  
+- `string` - texto entre aspas (ex: 'Olá mundo')
+- `boolean` - valores lógicos (true ou false)
+
+### Arrays (Vetores)
 ```pascal
 var
-    numeros: array[10] of integer;
-    nomes: array[5] of string;
+    numeros: array[10] of integer;     { 10 inteiros: índices 0-9 }
+    notas: array[5] of real;          { 5 reais: índices 0-4 }
+    nomes: array[3] of string;        { 3 strings: índices 0-2 }
 ```
+
+**Características:**
+- Sempre unidimensionais (apenas vetores, não matrizes)
+- Indexação baseada em zero (0, 1, 2, ...)
+- Tamanho fixo definido na declaração
 
 ### Procedimentos
 ```pascal
-procedure NomeProcedimento(parametro: tipo);
+procedure NomeProcedimento;
 begin
-    { comandos }
+    writeln('Procedimento sem parâmetros');
+end;
+
+procedure ComParametros(valor: integer; texto: string);
+begin
+    writeln('Valor: ', valor);
+    writeln('Texto: ', texto);
 end;
 ```
 
-### Funções
-```pascal
-function NomeFuncao(parametro: tipo): tipo_retorno;
-begin
-    { comandos }
-    return valor;
-end;
-```
+**Limitações:**
+- Não há suporte a funções que retornam valores
+- Apenas procedimentos (sem return)
+- Parâmetros passados por valor
 
-## Comandos
+## Comandos e Operações
 
 ### Atribuição
 ```pascal
+{ Variáveis simples }
 x := 10;
-array[indice] := valor;
+nome := 'João';
+ativo := true;
+altura := 1.75;
+
+{ Arrays }
+numeros[0] := 42;
+nomes[1] := 'Maria';
 ```
 
 ### Entrada e Saída
 ```pascal
-readln(variavel);
-writeln('texto', variavel);
+{ Entrada de dados }
+readln(idade);           { lê um inteiro }
+readln(nome);            { lê uma string }
+
+{ Saída de dados }
+writeln('Olá mundo');    { imprime texto }
+writeln(idade);          { imprime variável }
+writeln('Idade: ', idade); { imprime texto e variável }
 ```
 
-### Controle de Fluxo
+### Estruturas de Controle de Fluxo
 
-#### If-Then-Else
+#### Condicional If-Then-Else
 ```pascal
-if condicao then
-    comando
+{ If simples }
+if idade >= 18 then
+    writeln('Maior de idade');
+
+{ If-else }
+if nota >= 7.0 then
+    writeln('Aprovado')
 else
-    comando;
+    writeln('Reprovado');
+
+{ If aninhado }
+if idade >= 18 then begin
+    writeln('Maior de idade');
+    if idade >= 65 then
+        writeln('Idoso');
+end;
 ```
 
-#### While
+#### Loop While
 ```pascal
-while condicao do
-    comando;
+{ While simples }
+while contador < 10 do begin
+    writeln(contador);
+    contador := contador + 1;
+end;
+
+{ While com condição complexa }
+while (x > 0) and (y < 100) do begin
+    x := x - 1;
+    y := y + 2;
+end;
 ```
 
-#### For
+#### Loop For
 ```pascal
-for variavel := inicio to fim do
-    comando;
+{ For crescente }
+for i := 1 to 10 do
+    writeln('Número: ', i);
+
+{ For com array }
+for i := 0 to 4 do
+    numeros[i] := i * 2;
+
+{ For aninhado }
+for i := 1 to 5 do begin
+    for j := 1 to 3 do
+        writeln(i, ' - ', j);
+end;
 ```
 
-## Expressões
+## Operadores
 
 ### Operadores Aritméticos
-- `+` (soma)
-- `-` (subtração)
-- `*` (multiplicação)
-- `/` (divisão real)
-- `div` (divisão inteira)
-- `mod` (resto da divisão)
+```pascal
+resultado := a + b;      { soma }
+resultado := a - b;      { subtração }  
+resultado := a * b;      { multiplicação }
+resultado := a div b;    { divisão inteira }
+resultado := a mod b;    { resto da divisão }
+```
 
-### Operadores Relacionais
-- `=` (igual)
-- `<>` (diferente)
-- `<` (menor que)
-- `>` (maior que)
-- `<=` (menor ou igual)
-- `>=` (maior ou igual)
+### Operadores Relacionais  
+```pascal
+if a = b then ...        { igual }
+if a <> b then ...       { diferente }
+if a < b then ...        { menor }
+if a > b then ...        { maior }
+if a <= b then ...       { menor ou igual }
+if a >= b then ...       { maior ou igual }
+```
 
 ### Operadores Lógicos
-- `and` (e lógico)
-- `or` (ou lógico)
-- `not` (negação)
-
-## Tipos de Dados
-
-### Básicos
-- `integer`: números inteiros
-- `real`: números reais
-- `boolean`: verdadeiro/falso
-- `string`: texto
-
-### Literais
-- Inteiros: `123`, `-456`
-- Reais: `3.14`, `-2.5`
-- Booleanos: `true`, `false`
-- Strings: `'texto'`, `"texto"`
+```pascal
+if (a > 0) and (b > 0) then ...    { E lógico }
+if (a = 0) or (b = 0) then ...     { OU lógico }
+if not ativo then ...              { NÃO lógico }
+```
 
 ## Comentários
 
-### Chaves
+### Comentários de Bloco
 ```pascal
-{ Este é um comentário }
+{ Este é um comentário de bloco
+  que pode ocupar múltiplas linhas }
+program Exemplo;
 ```
 
-### Barra dupla
+### Comentários de Linha
 ```pascal
-// Este é um comentário de linha
+writeln('Hello'); // Este é um comentário de linha
+x := 10;          // Comentário no final da linha
+```
+
+## Exemplos Práticos
+
+### Programa Completo
+```pascal
+program ExemploCompleto;
+var
+    numeros: array[5] of integer;
+    i, soma, media: integer;
+begin
+    { Entrada de dados }
+    writeln('Digite 5 números:');
+    for i := 0 to 4 do begin
+        writeln('Número ', i + 1, ':');
+        readln(numeros[i]);
+    end;
+    
+    { Processamento }
+    soma := 0;
+    for i := 0 to 4 do
+        soma := soma + numeros[i];
+    
+    media := soma div 5;
+    
+    { Saída }
+    writeln('Soma: ', soma);
+    writeln('Média: ', media);
+    
+    { Análise }
+    if media >= 8 then
+        writeln('Excelente!')
+    else if media >= 6 then
+        writeln('Bom')
+    else
+        writeln('Pode melhorar');
+end.
 ```
