@@ -1,5 +1,5 @@
 """
-Definições dos nós da Árvore Sintática Abstrata (AST) para o compilador Pascal.
+Definições dos nós da Árvore Sintática Abstrata (AST)
 """
 
 from abc import ABC, abstractmethod

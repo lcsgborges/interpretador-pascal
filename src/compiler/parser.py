@@ -3,8 +3,8 @@ Analisador Sintático para o compilador Pascal.
 Responsável por converter tokens em uma Árvore Sintática Abstrata (AST).
 """
 
-from typing import List, Optional, Union
-from .lexer import Token, TokenType, Lexer
+from typing import List, Optional
+from .lexer import Token, TokenType
 from .ast_nodes import *
 
 class ParseError(Exception):
@@ -329,7 +329,7 @@ class Parser:
         # Debug: verificar token atual
         # print(f"DEBUG: Após then_stmt, token atual: {self.current_token()}")
         
-        self.skip_newlines()  # Adicionar skip_newlines aqui
+        self.skip_newlines()  
         
         else_stmt = None
         if self.match(TokenType.ELSE):

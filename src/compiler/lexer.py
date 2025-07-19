@@ -3,7 +3,6 @@ Analisador Léxico para o compilador Pascal.
 Responsável por converter o código fonte em tokens.
 """
 
-import re
 from enum import Enum, auto
 from typing import List, Optional, NamedTuple
 

@@ -3,7 +3,6 @@ Interpretador para o compilador Pascal.
 Responsável por executar o código Pascal a partir da AST.
 """
 
-import sys
 from typing import Any, Dict, List, Optional, Union
 from .ast_nodes import *
 
