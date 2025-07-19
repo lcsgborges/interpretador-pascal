@@ -1,0 +1,10 @@
+# Interpretador Pascal - Dependências
+
+# Este projeto foi desenvolvido em Python puro e não requer
+# dependências externas além do Python 3.8+
+
+# Para executar:
+# python3 compiler.py examples/hello.pas
+
+# Para executar testes:
+# python3 -m unittest tests.test_lexer tests.test_parser tests.test_interpreter -v
