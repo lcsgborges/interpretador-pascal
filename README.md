@@ -198,3 +198,4 @@ python3 compiler.py --debug programa.pas
 
 - Lucas Guimarães Borges (222015159)
 - Maria Clara Alves de Sousa (221008329)
+- Davi Mesquita Sousa (222006650)
