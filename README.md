@@ -64,7 +64,7 @@ O interpretador suporta as seguintes funcionalidades da linguagem Pascal:
 ### Instalação
 
 ```bash
-git clone https://github.com/fcte-compiladores/trabalho-final-trabalho_compiladores_pascal.git trabalho-compiladores
+git clone git@github.com:lcsgborges/trabalho-compiladores.git
 cd trabalho-compiladores
 ```
 
