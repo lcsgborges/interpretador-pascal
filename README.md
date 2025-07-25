@@ -1,11 +1,5 @@
 # Interpretador Pascal
 
-**Integrantes:**
-- Lucas Guimarães Borges (222015159)
-- Maria Clara Alves de Sousa (221008329)
-- Davi Mesquita Sousa (222006650)
-- Daniel Fernandes Silva (222008459)
-
 ## Introdução
 
 Este projeto implementa um interpretador para um subconjunto da linguagem Pascal. O interpretador foi desenvolvido seguindo as etapas tradicionais de compilação: análise léxica, análise sintática e execução direta através de uma árvore sintática abstrata (AST).
@@ -14,10 +8,7 @@ Este projeto implementa um interpretador para um subconjunto da linguagem Pascal
 
 - **Linguagem**: Python 3.8+
 - **Dependências**: Apenas biblioteca padrão do Python
-- **Arquitetura**: Tree-walking interpreter
-- **Paradigma**: Orientado a objetos
 - **Framework de Testes**: Python unittest
-- **Cobertura de Testes**: 19 testes unitários com 100% de taxa de sucesso
 
 ### Funcionalidades Implementadas
 
@@ -77,8 +68,6 @@ python3 --version
 # Pode usar o make para ter mais detalhes:
 make info
 ```
-
-> Verificar, mas acho que no Windows é só python e não python3 (o interpretador foi criado em sistema Linux)
 
 ## Como Usar
 
