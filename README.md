@@ -4,12 +4,6 @@
 
 Este projeto implementa um interpretador para um subconjunto da linguagem Pascal. O interpretador foi desenvolvido seguindo as etapas tradicionais de compilação: análise léxica, análise sintática e execução direta através de uma árvore sintática abstrata (AST).
 
-### Características Técnicas
-
-- **Linguagem**: Python 3.8+
-- **Dependências**: Apenas biblioteca padrão do Python
-- **Framework de Testes**: Python unittest
-
 ### Funcionalidades Implementadas
 
 O interpretador suporta as seguintes funcionalidades da linguagem Pascal:
@@ -57,16 +51,6 @@ O interpretador suporta as seguintes funcionalidades da linguagem Pascal:
 ```bash
 git clone git@github.com:lcsgborges/trabalho-compiladores.git
 cd trabalho-compiladores
-```
-
-### Configuração
-
-```bash
-# Verificar instalação do Python
-python3 --version
-
-# Pode usar o make para ter mais detalhes:
-make info
 ```
 
 ## Como Usar
@@ -204,7 +188,6 @@ A pasta `docs/` contém documentação técnica detalhada:
 
 ### Cobertura de Testes
 - **Total**: 19 testes unitários
-- **Taxa de Sucesso**: 100% (19/19 passando)
 
 ### Detalhamento por Módulo
 
